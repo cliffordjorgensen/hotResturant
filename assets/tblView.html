@@ -24,7 +24,8 @@
             <br>
 
             <div class="text-center">
-                <a href="/reserve"><button class="btn btn-lg btn-danger"><span class="fa fa-credit-card"></span> Make Reservation</button></a>
+                <a href="/reserve"><button class="btn btn-lg btn-danger"><span class="fa fa-credit-card"></span> Make
+                        Reservation</button></a>
                 <a href="/"><button class="btn btn-lg btn-default"><span class="fa fa-home"></span></button></a>
             </div>
         </div>
@@ -38,31 +39,60 @@
                         <h4>Current Reservations</h4>
                     </div>
                     <div class="card-body">
-                        <ul id="tableList" class="list-group"></ul>
+                        <div id="reservation">
+                            <h3><span id="name"></span></h3>
+                            <h3><span id="phone"></span></h3>
+                            <h3><span id="email"></span></h3>
+                            <h3><span id="id"></span></h3>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Waiting List Card -->
-                <div class="card mt-4">
-                    <div class="card-header">
-                        <h4>Waiting List</h4>
-                    </div>
-                    <div class="card-body">
-                        <ul id="waitList" class="list-group"></ul>
+                    <!-- Waiting List Card -->
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <h4>Waiting List</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul id="waitList" class="list-group"></ul>
+                        </div>
                     </div>
                 </div>
             </div>
+
+
+            <footer class="footer mt-4">
+                <div class="container">
+                    <p>Control Panel</p>
+                    <p><a href="#" id="clear">Clear Table</a> | <a href="/api/tables">API Table Link</a> | <a
+                            href="/api/waitlist">API
+                            Wait List</a>
+                </div>
+            </footer>
+
         </div>
 
+        <script type="text/javascript">
+            $("#view-tables").on("click", function () {
+                const viewTables = $("#tablelist").val().trim();
 
-        <footer class="footer mt-4">
-            <div class="container">
-                <p>Control Panel</p>
-                <p><a href="#" id="clear">Clear Table</a> | <a href="/api/tables">API Table Link</a> | <a href="/api/waitlist">API
-            Wait List</a>
-            </div>
-        </footer>
+                viewTables = viewTables.replace(/\s+/g, "").toLowerCase();
 
-    </div>
+                $.get("/tables" + viewTables, function (data) {
+                    console.log(data);
+                    if (data) {
+                        $("#reservation").show();
+                        $("#reserve-name").text(data.name);
+                        $("#reserve-phone").text(data.phone);
+                        $("#reserve-email").text(data.email);
+                        $("#reserve-unique-id").text(data.id);
+
+                    }
+                   
+                });
+            });
+        </script>
+
 
 </body>
+
+</html>

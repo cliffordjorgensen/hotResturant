@@ -64,8 +64,7 @@
             <footer class="footer mt-4">
                 <div class="container">
                     <p>Control Panel</p>
-                    <p><a href="#" id="clear">Clear Table</a> | <a href="/api/tables">API Table Link</a> | <a
-                            href="/api/waitlist">API
+                    <p><a href="#" id="clear">Clear Table</a> | <a href="/api/tables">API Table Link</a> | <a href="/api/waitlist">API
                             Wait List</a>
                 </div>
             </footer>
@@ -73,23 +72,39 @@
         </div>
 
         <script type="text/javascript">
-            $("#view-tables").on("click", function () {
+            $.get("/api/reservations", function(reservations) {
+                console.log(reservations);
+                if (reservations) {
+                    reservations.forEach(reservation => {
+                        const $h3 = $('<h3>').text('Name: ');
+                        const $name = $('<span>').attr('id', 'name').text(reservation.name);
+                        const $phoneNum = $('<span>').attr('id', 'phone_number').text(reservation.phoneNum);
+                        const $email = $('<span>').attr('id', 'email').text(reservation.email);
+                        const $id = $('<span>').attr('id', 'id').text(reservation.id);
+
+                        $h3.append($h3);
+                        $h3.append($phoneNum);
+                        $h3.append($email);
+                        $h3.append($id);
+                        $('#reservation').append($h3);
+                    })
+                }
+
+                // if (data) {
+                //     $("#reservation").show();
+                //     $("#name").text(data.name);
+                //     $("#reserve-phone").text(data.phone);
+                //     $("#reserve-email").text(data.email);
+                //     $("#reserve-unique-id").text(data.id);
+
+                // }
+
+            });
+            $("#view-tables").on("click", function() {
                 const viewTables = $("#tablelist").val().trim();
 
                 viewTables = viewTables.replace(/\s+/g, "").toLowerCase();
 
-                $.get("/tables" + viewTables, function (data) {
-                    console.log(data);
-                    if (data) {
-                        $("#reservation").show();
-                        $("#reserve-name").text(data.name);
-                        $("#reserve-phone").text(data.phone);
-                        $("#reserve-email").text(data.email);
-                        $("#reserve-unique-id").text(data.id);
-
-                    }
-                   
-                });
             });
         </script>
 

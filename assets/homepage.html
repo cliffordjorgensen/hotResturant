@@ -22,8 +22,10 @@
             <br>
 
             <div class="text-center">
+
                 <a href="/reservations"><button class="btn btn-lg btn-primary"><span class="fa fa-list-alt"></span> View Tables</button></a>
                 <a href="/tables"><button class="btn btn-lg btn-danger"><span class="fa fa-credit-card"></span> Make Reservation</button></a>
+
             </div>
 
         </div>
@@ -36,6 +38,22 @@
 
     </div>
 
+
+    <script type="text/javascript">
+        $("#make-reservations").on("click", function() {
+         
+          $.get("/reservations" , function(data) {
+           
+          });
+        });
+
+        $("#view-tables").on("click", function() {
+         
+         $.get("/tables" , function(data) {
+          
+         });
+       });
+      </script>
 
 </body>
 

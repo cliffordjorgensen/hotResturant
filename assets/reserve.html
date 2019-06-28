@@ -24,12 +24,12 @@
             <div class="text-center">
                 <a href="/tables">
                     <button class="btn btn-lg btn-primary">
-            <span class="fa fa-list-alt"></span> View Tables</button>
+                        <span class="fa fa-list-alt"></span> View Tables</button>
                 </a>
                 <a href="/">
                     <button class="btn btn-lg btn-default">
-            <span class="fa fa-home"></span>
-          </button>
+                        <span class="fa fa-home" id="home"></span>
+                    </button>
                 </a>
             </div>
         </div>
@@ -58,7 +58,7 @@
                                 <label for="reserve-unique-id">Unique ID</label>
                                 <input type="text" class="form-control" id="reserve-unique-id">
                             </div>
-                            <button type="submit" class="btn btn-primary submit">Submit</button>
+                            <button type="submit" class="btn btn-primary submit" id="submit-btn">Submit</button>
                         </form>
                     </div>
                 </div>
@@ -75,6 +75,45 @@
         </footer>
 
     </div>
+
+
+    <script type="text/javascript">
+
+        $("#home").on("click", function () {
+
+            $.get("/", function (data) {
+
+            });
+        });
+
+        $("#view-tables").on("click", function () {
+
+            $.get("/", function (data) {
+
+            });
+        });
+
+
+        $("#submit-btn").on("click", function () {
+            event.preventDefault();
+
+            let newReservation = {
+                name: $("#reserve-name").val().trim(),
+                phone: $("#reserve-phone").val().trim(),
+                email: $("#reserve-email").val().trim(),
+                uniqueId: $("#reserve-unique-id").val().trim(),
+            };
+
+            $.post("/reservations", newReservation)
+                .then(function (data) {
+                    console.log("add.html", data);
+                    alert("Adding reservation...");
+                });
+        });
+
+
+
+    </script>
 
 </body>
 
